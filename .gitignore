@@ -1,2 +1,9 @@
 
 /node_modules
+/build
+
+/client/node_modules
+/client/build
+client/.DS_Store
+.DS_Store
+yarn-error.log

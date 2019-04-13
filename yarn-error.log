@@ -14,27 +14,50 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/Users/michaelkrakhofer/Documents/GitHub/chatroom/node_modules/node-notifier/vendor/terminal-notifier.app/Contents/Info.plist'
+  SyntaxError: /Users/michaelkrakhofer/Documents/GitHub/chatroom/package.json: Unexpected token } in JSON at position 209
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.12.3/libexec/lib/cli.js:1631:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.12.3/libexec/lib/cli.js:304:30)
+      at /usr/local/Cellar/yarn/1.12.3/libexec/lib/cli.js:315:13
 
 npm manifest: 
   {
     "name": "chatroom",
     "version": "1.0.0",
-    "description": "a simple chatroom for preparing a workshop about websockets",
+    "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "test",
-      "tsc": "tsc",
-      "dev": "ts-node-dev --respawn --transpileOnly ./app/app.ts",
-      "prod": "tsc && node ./build/app.js"
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "./node_modules/.bin/webpack",
     },
-    "author": "Michael Krakhofer",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/mkrakhofer/chatroom.git"
+    },
+    "keywords": [],
+    "author": "",
     "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/mkrakhofer/chatroom/issues"
+    },
+    "homepage": "https://github.com/mkrakhofer/chatroom#readme",
     "dependencies": {
-      "@types/express": "^4.16.1",
       "express": "^4.16.4",
-      "ts-node-dev": "^1.0.0-pre.32",
+      "react": "^16.8.6",
+      "react-dom": "^16.8.6",
       "typescript": "^3.4.3"
+    },
+    "devDependencies": {
+      "@types/react": "^16.8.13",
+      "@types/react-dom": "^16.8.4",
+      "html-webpack-plugin": "^3.2.0",
+      "source-map-loader": "^0.2.4",
+      "ts-loader": "^5.3.3",
+      "webpack": "^4.30.0",
+      "webpack-cli": "^3.3.0",
+      "webpack-dev-middleware": "^3.6.2",
+      "webpack-hot-middleware": "^2.24.3"
     }
   }
 

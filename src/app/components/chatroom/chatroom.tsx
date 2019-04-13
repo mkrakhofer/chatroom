@@ -5,7 +5,8 @@ export const ChatRoom = () => {
     let [messages, setMessages] = React.useState<string[]>([]);
     let [didMount, setDidMount] = React.useState(false);
 
-    const ws = new WebSocket('ws://localhost:40510');
+    var HOST = location.origin.replace(/^http/, 'ws')
+    const ws = new WebSocket(HOST);
 
     const updateMessages = (message: string) => {
         setMessages([...messages, message]);

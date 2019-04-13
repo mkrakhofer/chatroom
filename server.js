@@ -17,8 +17,8 @@ app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true, publicPath: webpackConfig.output.publicPath, stats: { colors: true }
 }));
 
-var WebSocketServer = require('ws').Server,
-    wss = new WebSocketServer({ port: 40510 })
+var SocketServer = require('ws').Server,
+    wss = new SocketServer({ server: app })
 
 wss.on('connection', function (ws) {
     ws.on('message', function (message) {

@@ -2,5 +2,35 @@ import * as React from 'react';
 import './chatroom.scss';
 
 export const ChatRoom = () => {
-    return <div className="chatroom">ChatRoom</div>;
+    let [messages, setMessages] = React.useState<string[]>([]);
+    let [didMount, setDidMount] = React.useState(false);
+
+    const ws = new WebSocket('ws://localhost:40510');
+
+    const updateMessages = (message: string) => {
+        setMessages([...messages, message]);
+    }
+
+    React.useEffect(() => {
+        if(!didMount) {
+            console.log("USE EFFEKT");
+            ws.onopen = () => {
+                console.log('websocket is connected...');
+                ws.send('connected');
+            }
+            ws.onmessage = (event: MessageEvent) => {
+                console.log(event.data);
+                updateMessages(event.data);
+            }
+            setDidMount(true);
+        }
+    })
+
+    const renderMessages = () => {
+        return messages.map((message: string, i: number) => {
+            return <p key={i}>- {message}</p>;
+        })
+    }
+
+    return <div className="chatroom">{renderMessages()}</div>;
 }

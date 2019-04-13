@@ -23,17 +23,17 @@
     "express": "^4.16.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.3",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-middleware": "^3.6.2",
+    "webpack-hot-middleware": "^2.24.3"
   },
   "devDependencies": {
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.8.4",
     "html-webpack-plugin": "^3.2.0",
     "source-map-loader": "^0.2.4",
-    "ts-loader": "^5.3.3",
-    "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-middleware": "^3.6.2",
-    "webpack-hot-middleware": "^2.24.3"
+    "ts-loader": "^5.3.3"
   }
 }

@@ -3,7 +3,6 @@ import './chatroom.scss';
 
 export const ChatRoom = () => {
     let [messages, setMessages] = React.useState<string[]>([]);
-    let [didMount, setDidMount] = React.useState(false);
 
     var HOST = location.origin.replace(/^http/, 'ws')
     const ws = new WebSocket(HOST);
@@ -13,19 +12,16 @@ export const ChatRoom = () => {
     }
 
     React.useEffect(() => {
-        if(!didMount) {
-            console.log("USE EFFEKT");
-            ws.onopen = () => {
-                console.log('websocket is connected...');
-                ws.send('connected');
-            }
-            ws.onmessage = (event: MessageEvent) => {
-                console.log(event.data);
-                updateMessages(event.data);
-            }
-            setDidMount(true);
+        console.log("USE EFFEKT");
+        ws.onopen = () => {
+            console.log('websocket is connected...');
+            ws.send('connected');
         }
-    })
+        ws.onmessage = (event: MessageEvent) => {
+            console.log(event.data);
+            updateMessages(event.data);
+        }
+    }, [])
 
     const renderMessages = () => {
         return messages.map((message: string, i: number) => {

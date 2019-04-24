@@ -1,9 +1,11 @@
 
 /node_modules
 /build
+/dist
 
 /client/node_modules
 /client/build
 client/.DS_Store
 .DS_Store
 yarn-error.log
+dist/js/app.bundle.js

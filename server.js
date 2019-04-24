@@ -5,7 +5,8 @@ const path = require('path'),
     app = express(),
     port = process.env.PORT || 3000;
 
-app.listen(port, () => { console.log(`App is listening on port ${port}`) });
+// 🎉 https://stackoverflow.com/questions/53485713/node-js-with-express-and-websocket-giving-error-during-websocket-handshake-unex
+const server = app.listen(port, () => { console.log(`App is listening on port ${port}`) });
 
 app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
@@ -18,7 +19,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 }));
 
 var SocketServer = require('ws').Server,
-    wss = new SocketServer({ server: app })
+    wss = new SocketServer({ server: server })
 
 wss.on('connection', function (ws) {
     ws.on('message', function (message) {

@@ -5,7 +5,6 @@ export const ChatRoom = () => {
     let [messages, setMessages] = React.useState<string[]>([]);
 
     var HOST = location.origin.replace(/^http/, 'ws')
-    const ws = new WebSocket(HOST);
 
     const updateMessages = (message: string) => {
         setMessages([...messages, message]);
@@ -13,6 +12,7 @@ export const ChatRoom = () => {
 
     React.useEffect(() => {
         console.log("USE EFFEKT");
+        const ws = new WebSocket(HOST);
         ws.onopen = () => {
             console.log('websocket is connected...');
             ws.send('connected');

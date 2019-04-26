@@ -1,5 +1,8 @@
 import * as React from 'react';
 import './chatroom.scss';
+import { UserList } from './user-list/user-list';
+import { Messages } from './messages/messages';
+import { UserInput } from './user-input/user-input';
 
 export const ChatRoom = () => {
     let [messages, setMessages] = React.useState<string[]>([]);
@@ -7,7 +10,8 @@ export const ChatRoom = () => {
     var HOST = location.origin.replace(/^http/, 'ws')
 
     const updateMessages = (message: string) => {
-        setMessages([...messages, message]);
+        // TRICKY! https://github.com/facebook/react/issues/15041
+        // setMessages(m => m.concat(message));
     }
 
     React.useEffect(() => {
@@ -18,7 +22,7 @@ export const ChatRoom = () => {
             ws.send('connected');
         }
         ws.onmessage = (event: MessageEvent) => {
-            console.log(event.data);
+            //console.log(event.data);
             updateMessages(event.data);
         }
     }, [])
@@ -29,5 +33,13 @@ export const ChatRoom = () => {
         })
     }
 
-    return <div className="chatroom">{renderMessages()}</div>;
+    return <div className="chatroom">
+        <div className="left">
+            <UserList/>
+        </div>
+        <div className="right">
+            <Messages/>
+            <UserInput/>
+        </div>
+    </div>;
 }

@@ -20,4 +20,16 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
+    background: gray;
+    display: flex;
+
+    .left {
+        display: inherit;
+    }
+
+    .right {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
 }

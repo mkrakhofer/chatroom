@@ -1,13 +1,16 @@
+import { MessageStore } from './../stores/messages';
 import { UserStore } from './../stores/users';
 import { NotificationManager } from 'react-notifications';
 
-export const connect = (userStore: UserStore) => {
+let ws: WebSocket;
+
+export const connect = (userStore: UserStore, messageStore: MessageStore) => {
     var HOST = location.origin.replace(/^http/, 'ws')
-    const ws = new WebSocket(HOST);
+    ws = new WebSocket(HOST);
   
     ws.onopen = () => {
         console.log('websocket is connected...');
-        ws.send('connected');
+        //ws.send('connected');
     }
     ws.onmessage = (event: MessageEvent) => {
         // console.log(event.data);
@@ -36,6 +39,20 @@ export const connect = (userStore: UserStore) => {
                 NotificationManager.error(left.name + " left");
                 break;
             }
+            case "MESSAGES": {
+                messageStore.messages = message.data;
+                break;
+            }
+            case "NEW_MESSAGE": {
+                messageStore.addMessage(message.data);
+                break;
+            }
         }
+    }
+}
+
+export const sendMessage = (message: string) => {
+    if(ws) {
+        ws.send(message);
     }
 }

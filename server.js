@@ -6,6 +6,7 @@ const path = require('path'),
     port = process.env.PORT || 3000;
 
 const usersBackendStore = require('./backend/users');
+const messagesBackendStore = require('./backend/messages');
 const generateName = require('sillyname');
 const uuidv4 = require('uuid/v4');
 
@@ -36,7 +37,8 @@ wss.on('connection', function (ws) {
 
     usersBackendStore.store.addUser(newUser);
     var users = usersBackendStore.store.users;
-    
+    var messages = messagesBackendStore.store.messages;
+
     ws.send(JSON.stringify({
         type: "ME",
         data: newUser
@@ -45,6 +47,11 @@ wss.on('connection', function (ws) {
     ws.send(JSON.stringify({
         type: "USERS",
         data: users
+    }));
+    
+    ws.send(JSON.stringify({
+        type: "MESSAGES",
+        data: messages
     }));
 
     // Broadcast to everyone else.
@@ -59,6 +66,22 @@ wss.on('connection', function (ws) {
 
     ws.on('message', function (message) {
         console.log('received: %s', message)
+
+        const newMessage = {
+            id: uuidv4(),
+            user: newUser,
+            content: message
+        };
+
+        messagesBackendStore.store.addMessage(newMessage);
+        wss.clients.forEach(function each(client) {
+            if (client.readyState === WebSocket.OPEN) {
+              client.send(JSON.stringify({
+                  type: "NEW_MESSAGE",
+                  data: newMessage
+              }));
+            }
+          });
     })
 
     ws.on('close', function () {

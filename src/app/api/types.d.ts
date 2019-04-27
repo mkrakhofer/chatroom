@@ -5,9 +5,8 @@ interface User {
 
 interface Message {
     id: string;
-    userId: string;
+    user: User;
     content: string;
-    dateTime: Date;
 }
 
 declare module "react-notifications";

@@ -1,11 +1,13 @@
 import * as React from "react";
 import "./user-input.scss";
+import { sendMessage } from "../../../api/websocket";
 
 export const UserInput = () => {
     const [value, setValue] = React.useState("");
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
+            sendMessage(value);
             setValue("");
         }
     }

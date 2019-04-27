@@ -7,6 +7,7 @@ interface IProps {
 
 export const Message = (props: IProps) => {
     return <div className="message">
+        <p>{props.message.user.name}</p>
         <p>{props.message.content}</p>
     </div>;
 }

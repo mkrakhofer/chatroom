@@ -8,6 +8,7 @@ import { UserStoreContext } from '../../stores/users';
 import '../../../../node_modules/react-notifications/lib/notifications.css';
 import {NotificationContainer} from 'react-notifications';
 import { observer } from 'mobx-react-lite';
+import { MessageStoreContext } from '../../stores/messages';
 
 export const ChatRoom = observer(() => {
     // let [messages, setMessages] = React.useState<string[]>([]);
@@ -18,10 +19,10 @@ export const ChatRoom = observer(() => {
     }
 
     const userStore = React.useContext(UserStoreContext);
-
+    const messageStore = React.useContext(MessageStoreContext);
     React.useEffect(() => {
         console.log("USE EFFEKT");
-        connect(userStore);
+        connect(userStore, messageStore);
     }, [])
 
     // const renderMessages = () => {

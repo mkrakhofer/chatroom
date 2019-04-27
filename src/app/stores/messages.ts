@@ -1,7 +1,7 @@
 import * as React from "react";
 import {observable, action} from "mobx"
 
-class MessageStore {
+export class MessageStore {
     @observable messages: Message[] = [];
 
     @action

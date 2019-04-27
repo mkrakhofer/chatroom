@@ -47,6 +47,10 @@ export const connect = (userStore: UserStore, messageStore: MessageStore) => {
                 messageStore.addMessage(message.data);
                 break;
             }
+            case "PING": {
+                console.log("PING");
+                break;
+            }
         }
     }
 }

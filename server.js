@@ -96,19 +96,21 @@ wss.on('connection', function (ws) {
           usersBackendStore.store.removeUser(newUser);
     });
 
-    // var clearIntervalId = setInterval(
-    //     () => {
-    //         try {
-    //             ws.send(`${new Date()}`)
-    //         }
-    //         catch(error) {
-    //             console.log("CLOSING CONNECTION... " + `${new Date()}`);
-    //             ws.close();
-    //             clearInterval(clearIntervalId);
-    //         }
-    //     },
-    //     1000
-    // )
+    var clearIntervalId = setInterval(
+        () => {
+            try {
+                ws.send(JSON.stringify({
+                    type: "PING"
+                }));
+            }
+            catch(error) {
+                console.log("CLOSING CONNECTION OF " + newUser.name);
+                ws.close();
+                clearInterval(clearIntervalId);
+            }
+        },
+        10000
+    )
 });
 
 app.use(require('webpack-hot-middleware')(compiler));

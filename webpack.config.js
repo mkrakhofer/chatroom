@@ -29,6 +29,7 @@ module.exports = {
                     "sass-loader" // compiles Sass to CSS, using Node Sass by default
                 ]
             },
+            { test: /(\.css$)/, loaders: ['style-loader', 'css-loader', 'postcss-loader'] }, { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' },
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
     },

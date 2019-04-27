@@ -31,5 +31,10 @@ body {
         display: flex;
         flex-direction: column;
         width: 100%;
+
+        .greeting {
+            background: white;
+            padding: 8px;
+        }
     }
 }

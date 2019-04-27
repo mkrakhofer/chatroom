@@ -9,3 +9,5 @@ interface Message {
     content: string;
     dateTime: Date;
 }
+
+declare module "react-notifications";

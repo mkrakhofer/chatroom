@@ -1,14 +1,14 @@
 import * as React from "react";
 import {observable, action} from "mobx"
-var generateName = require('sillyname');
-var sillyName = generateName();
-class UserStore {
-    @observable users: User[] = [
-        {
-            id: "1234",
-            name: sillyName,
-        }
-    ];
+
+export class UserStore {
+    @observable users: User[] = [];
+    @observable me: User;
+
+    @action
+    setMe = (user: User) => {
+        this.me = user;
+    }
 
     @action
     addUser = (user: User) => {

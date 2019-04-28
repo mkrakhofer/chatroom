@@ -23,12 +23,39 @@ app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true, publicPath: webpackConfig.output.publicPath, stats: { colors: true }
 }));
 
+/**
+ * 1 SETUP THE WEBSERVER
+ */
+
 const WebSocket = require('ws');
 
 var SocketServer = WebSocket.Server,
     wss = new SocketServer({ server: server })
 
 wss.on('connection', function (ws) {
+
+    /**
+     * 6 BROADCAST FUNCTIONS
+     */
+    const broadcastOthers = (message) => {
+        wss.clients.forEach(function each(client) {
+            if (client !== ws && client.readyState === WebSocket.OPEN) {
+                client.send(message);
+            }
+        });
+    }
+
+    const broadcastAll = (message) => {
+        wss.clients.forEach(function each(client) {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(message);
+            }
+        });
+    }
+
+    /**
+     * 3 CREATE A USER AND SEND IT TO THE CLIENT
+     */
 
     var newUser = {
         id: uuidv4(),
@@ -44,26 +71,42 @@ wss.on('connection', function (ws) {
         data: newUser
     }));
 
+    /**
+     * 5 SEND USERS TO CLIENT
+     */
+
     ws.send(JSON.stringify({
         type: "USERS",
         data: users
     }));
-    
+
+    /**
+     * 8 SEND ALL MESSAGES TO THE CLIENT
+     */
     ws.send(JSON.stringify({
         type: "MESSAGES",
         data: messages
     }));
 
-    // Broadcast to everyone else.
-    wss.clients.forEach(function each(client) {
-        if (client !== ws && client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify({
-              type: "USER_JOINED",
-              data: newUser
-          }));
-        }
-      });
+    /**
+     * 7 BROADCAST USER JOINED/LEFT
+     */
+    broadcastOthers(JSON.stringify({
+        type: "USER_JOINED",
+        data: newUser
+    }));
 
+    ws.on('close', function () {
+        broadcastOthers(JSON.stringify({
+            type: "USER_LEFT",
+            data: newUser
+        }));
+        usersBackendStore.store.removeUser(newUser);
+    });
+
+    /**
+     * 9 RECEIVE NEW MESSAGES AND BROADCAST THEM
+     */
     ws.on('message', function (message) {
         console.log('received: %s', message)
 
@@ -74,28 +117,15 @@ wss.on('connection', function (ws) {
         };
 
         messagesBackendStore.store.addMessage(newMessage);
-        wss.clients.forEach(function each(client) {
-            if (client.readyState === WebSocket.OPEN) {
-              client.send(JSON.stringify({
-                  type: "NEW_MESSAGE",
-                  data: newMessage
-              }));
-            }
-          });
+        broadcastAll(JSON.stringify({
+            type: "NEW_MESSAGE",
+            data: newMessage
+        }));
     })
 
-    ws.on('close', function () {
-        wss.clients.forEach(function each(client) {
-            if (client !== ws && client.readyState === WebSocket.OPEN) {
-              client.send(JSON.stringify({
-                  type: "USER_LEFT",
-                  data: newUser
-              }));
-            }
-          });
-          usersBackendStore.store.removeUser(newUser);
-    });
-
+    /**
+     * 10 PING
+     */
     var clearIntervalId = setInterval(
         () => {
             try {
@@ -103,13 +133,12 @@ wss.on('connection', function (ws) {
                     type: "PING"
                 }));
             }
-            catch(error) {
+            catch (error) {
                 console.log("CLOSING CONNECTION OF " + newUser.name);
                 ws.close();
                 clearInterval(clearIntervalId);
             }
-        },
-        10000
+        }, 10000
     )
 });
 

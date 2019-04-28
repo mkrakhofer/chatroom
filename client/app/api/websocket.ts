@@ -5,17 +5,22 @@ import { NotificationManager } from 'react-notifications';
 let ws: WebSocket;
 
 export const connect = (userStore: UserStore, messageStore: MessageStore) => {
+
+    /**
+     * 2 CONNECT THE WEBSERVER
+     */
     var HOST = location.origin.replace(/^http/, 'ws')
     ws = new WebSocket(HOST);
   
     ws.onopen = () => {
         console.log('websocket is connected...');
-        //ws.send('connected');
     }
-    ws.onmessage = (event: MessageEvent) => {
-        // console.log(event.data);
-        // updateMessages(event.data);
 
+    /**
+     * 4 RECEIVE THE CLIENTS USER
+     */
+
+    ws.onmessage = (event: MessageEvent) => {
         const message = JSON.parse(event.data);
 
         switch(message.type) {

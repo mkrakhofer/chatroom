@@ -5,8 +5,8 @@ const path = require('path'),
     app = express(),
     port = process.env.PORT || 3000;
 
-const usersBackendStore = require('./backend/users');
-const messagesBackendStore = require('./backend/messages');
+const usersBackendStore = require('./backend-data-stores/users');
+const messagesBackendStore = require('./backend-data-stores/messages');
 const generateName = require('sillyname');
 const uuidv4 = require('uuid/v4');
 

@@ -9,8 +9,13 @@ interface IProps {
 export const UserListItem = (props: IProps) => {
     
     const me: User = React.useContext(UserStoreContext).me;
-
-    return <div style={me && props.user.id === me.id ? {color: "red"} : undefined} className="user-list-item">
+    let c = "user-list-item";
+    
+    if(me && props.user.id === me.id) {
+        c = c + " user-list-item--me"
+    }
+    
+    return <div className={c}>
         {props.user.name}
     </div>;
 }

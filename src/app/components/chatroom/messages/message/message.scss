@@ -1,0 +1,29 @@
+.chat-message {
+    background: #45aaf2;
+    margin: 16px;
+    padding: 16px;
+    min-width: 51%;
+    max-width: 80%;
+    float: left;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.25); 
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.25);
+
+    p {
+        &.sender {
+            color: #0652DD;
+        }
+        &.content {
+            color: white;
+        }
+    }
+
+    &--me {
+        background: #26de81;
+        float: right;
+        p {
+            &.sender {
+                color: #009432;
+            }
+        }
+    }
+}

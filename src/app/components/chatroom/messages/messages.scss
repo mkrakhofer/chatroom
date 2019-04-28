@@ -1,7 +1,9 @@
 
 .messages {
     flex: 1;
-    background: skyblue;
+    background: #d1d8e0;
+    background-image: url(../../../../../bongo-cat.png);
+    background-size: 200px;
     padding: 8px;
     overflow-y: scroll;
 }

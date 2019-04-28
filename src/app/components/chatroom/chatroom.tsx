@@ -31,9 +31,9 @@ export const ChatRoom = observer(() => {
     //     })
     // }
 
-    let greeting = "Welcome!";
+    let greeting = "Welcome, ";
     if(userStore.me) {
-        greeting += " Your name is '" + userStore.me.name + "'!";
+        greeting += "'" + userStore.me.name + "'!";
     }
 
     return <div className="chatroom">

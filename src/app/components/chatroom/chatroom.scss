@@ -14,13 +14,11 @@ body {
 }
 
 .chatroom {
-    color: green;
     position: absolute;
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
-    background: gray;
     display: flex;
 
     .left {
@@ -33,7 +31,8 @@ body {
         width: 100%;
 
         .greeting {
-            background: white;
+            color: white;
+            background: #20bf6b;
             padding: 8px;
         }
     }
